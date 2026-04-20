@@ -12,12 +12,12 @@ public class Filtros {
             System.out.println("║         Filtros de Imagen - Efectos por Colores             ║");
             System.out.println("╚════════════════════════════════════════════════════════════╝");
             System.out.println("\nElige un filtro para aplicar:\n");
-            System.out.println("  1. Desvanecimiento Circular");
-            System.out.println("  2. Efecto Blanco y Negro");
-            System.out.println("  3. Efecto Escalas de Grises");
-            System.out.println("  4. Efecto Retro 1 (Reducción de colores)");
-            System.out.println("  5. Efecto Retro 2 (Posterización)");
-            System.out.println("  6. Vidrio Esmerilado");
+            System.out.println("  1. Vidrio Esmerilado");
+            System.out.println("  2. Desvanecimiento Circular");
+            System.out.println("  3. Efecto Retro 1 (Reducción de colores)");
+            System.out.println("  4. Efecto Retro 2 (Posterización)");
+            System.out.println("  5. Blanco y Negro");
+            System.out.println("  6. Escala de Grises");
             System.out.println("  0. Salir\n");
             System.out.print("Ingresa tu opción: ");
 
@@ -26,22 +26,22 @@ public class Filtros {
 
                 switch (opcion) {
                     case 1:
-                        DesvanecimientoCircular.aplicarFiltro();
+                        VidrioEsmerilado.aplicarFiltro();
                         break;
                     case 2:
-                        EfectoBlancoNegro.aplicarFiltro();
+                        DesvanecimientoCircular.aplicarFiltro();
                         break;
                     case 3:
-                        EfectoEscalasGrises.aplicarFiltro();
-                        break;
-                    case 4:
                         EfectoRetro1.aplicarFiltro();
                         break;
-                    case 5:
+                    case 4:
                         EfectoRetro2.aplicarFiltro();
                         break;
+                    case 5:
+                        EfectoBlancoNegro.aplicarFiltro();
+                        break;
                     case 6:
-                        VidrioEsmerilado.aplicarFiltro();
+                        EfectoEscalasGrises.aplicarFiltro();
                         break;
                     case 0:
                         System.out.println("\n¡Hasta luego! 👋");

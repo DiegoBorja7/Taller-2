@@ -6,29 +6,34 @@ import javax.imageio.ImageIO;
 
 public class EfectoEscalasGrises {
 	/*
-	 * Reducir los colores de la imagen a una escala de grises de N = (2, 4, 8, 64,
-	 * 128, 255).
+	 * 6. Efecto escala de grises:
+	 * Reducir los colores de la imagen a una escala de grises de
+	 * N = (2, 4, 8, 64, 128, 255).
 	 */
 
 	public static void aplicarFiltro() {
+		System.out.println("\n🎨 Generando Efecto Escalas de Grises para todos los valores de N...\n");
 
-		File file = new File("src/main/resources/image/Deber2.jpg");
+		int[] valoresN = { 2, 4, 8, 64, 128, 255 };
+		File inputFile = new File("src/main/resources/image/Filtros por Colores/Deber2.jpg");
 
-		int N = 255;
+		for (int N : valoresN) {
+			generarEscalasGrises(inputFile, N);
+		}
+	}
 
-		File file2 = new File("src/main/resources/image/imagen_escalas_grises_N" + N + ".png");
-
-		int ancho, alto, pixel, pixelNuevo;
-		int a, r, g, b;
+	private static void generarEscalasGrises(File inputFile, int N) {
+		int width, height, pixel, pixelNuevo;
+		int alpha, red, green, blue;
 		int gris, nivel;
 		float paso;
 
 		try {
-			BufferedImage buffer = ImageIO.read(file);
-			ancho = buffer.getWidth();
-			alto = buffer.getHeight();
+			BufferedImage image = ImageIO.read(inputFile);
+			width = image.getWidth();
+			height = image.getHeight();
 
-			BufferedImage buffer2 = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+			BufferedImage filterImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 			if (N < 2) {
 				N = 2;
@@ -36,17 +41,17 @@ public class EfectoEscalasGrises {
 
 			paso = 255f / (N - 1);
 
-			for (int y = 0; y < alto; y++) {
-				for (int x = 0; x < ancho; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
 
-					pixel = buffer.getRGB(x, y);
+					pixel = image.getRGB(x, y);
 
-					a = (pixel >> 24) & 0xFF;
-					r = (pixel >> 16) & 0xFF;
-					g = (pixel >> 8) & 0xFF;
-					b = (pixel >> 0) & 0xFF;
+					alpha = (pixel >> 24) & 0xFF;
+					red = (pixel >> 16) & 0xFF;
+					green = (pixel >> 8) & 0xFF;
+					blue = (pixel >> 0) & 0xFF;
 
-					gris = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
+					gris = (int) (0.2126 * red + 0.7152 * green + 0.0722 * blue);
 
 					nivel = Math.round(gris / paso);
 					gris = Math.round(nivel * paso);
@@ -56,16 +61,17 @@ public class EfectoEscalasGrises {
 					if (gris > 255)
 						gris = 255;
 
-					pixelNuevo = (a << 24) | (gris << 16) | (gris << 8) | (gris << 0);
-					buffer2.setRGB(x, y, pixelNuevo);
+					pixelNuevo = (alpha << 24) | (gris << 16) | (gris << 8) | (gris << 0);
+					filterImage.setRGB(x, y, pixelNuevo);
 				}
 			}
 
-			ImageIO.write(buffer2, "png", file2);
-			System.out.println("✅ Efecto Escalas de Grises aplicado exitosamente.");
+			File outputFile = new File("src/main/resources/image/Filtros por Colores/EscalasGrises_N" + N + ".png");
+			ImageIO.write(filterImage, "png", outputFile);
+			System.out.println("  ✓ Imagen con N=" + N + " niveles generada");
 
 		} catch (Exception e) {
-			System.out.println("❌ Error al aplicar filtro: " + e.getMessage());
+			System.out.println("  ✗ Error con N=" + N + ": " + e.getMessage());
 		}
 	}
 }

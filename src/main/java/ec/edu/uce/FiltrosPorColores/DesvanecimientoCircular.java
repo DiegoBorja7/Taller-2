@@ -6,59 +6,68 @@ import javax.imageio.ImageIO;
 
 public class DesvanecimientoCircular {
 
+	/*
+	 * 2. Desvanecimiento circular:
+	 * Crear una imagen que sea totalmente opaca en el centro y se vuelva
+	 * transparente hacia las esquinas.
+	 * Calcular la distancia de cada píxel (x, y) al centro de la imagen y usar esa
+	 * distancia para modificar el Alpha:
+	 * a más distancia, menos Alpha.
+	 */
+
 	public static void aplicarFiltro() {
 
-		File file = new File("src/main/resources/image/Deber2.jpg");
-		File file2 = new File("src/main/resources/image/imagen_desvanecimiento_circular.png");
-
-		int ancho, alto, pixel, pixelNuevo;
-		int a, r, g, b;
+		File file = new File("src/main/resources/image/Filtros por Colores/Deber2.jpg");
+		
+		int width, height, pixel, pixelNuevo;
+		int alpha, red, green, blue;
 
 		double centroX, centroY, maxDistancia, distancia;
 
 		try {
-			BufferedImage buffer = ImageIO.read(file);
-			ancho = buffer.getWidth();
-			alto = buffer.getHeight();
+			BufferedImage image = ImageIO.read(file);
+			width = image.getWidth();
+			height = image.getHeight();
 
-			BufferedImage buffer2 = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+			BufferedImage filterImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-			centroX = (ancho - 1) / 2.0;
-			centroY = (alto - 1) / 2.0;
+			centroX = (width - 1) / 2.0;
+			centroY = (height - 1) / 2.0;
 			maxDistancia = Math.sqrt((centroX * centroX) + (centroY * centroY));
 
 			if (maxDistancia == 0) {
 				maxDistancia = 1;
 			}
 
-			for (int y = 0; y < alto; y++) {
-				for (int x = 0; x < ancho; x++) {
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
 
-					pixel = buffer.getRGB(x, y);
+					pixel = image.getRGB(x, y);
 
-					a = (pixel >> 24) & 0xFF;
-					r = (pixel >> 16) & 0xFF;
-					g = (pixel >> 8) & 0xFF;
-					b = (pixel >> 0) & 0xFF;
+					alpha = (pixel >> 24) & 0xFF;
+					red = (pixel >> 16) & 0xFF;
+					green = (pixel >> 8) & 0xFF;
+					blue = (pixel >> 0) & 0xFF;
 
 					distancia = Math.sqrt(((x - centroX) * (x - centroX)) + ((y - centroY) * (y - centroY)));
 
-					a = (int) (255 * (1.0 - (distancia / maxDistancia)));
+					alpha = (int) (255 * (1.0 - (distancia / maxDistancia)));
 
-					if (a < 0) {
-						a = 0;
+					if (alpha < 0) {
+						alpha = 0;
 					}
-					if (a > 255) {
-						a = 255;
+					if (alpha > 255) {
+						alpha = 255;
 					}
 
-					pixelNuevo = (a << 24) | (r << 16) | (g << 8) | (b << 0);
-					buffer2.setRGB(x, y, pixelNuevo);
+					pixelNuevo = (alpha << 24) | (red << 16) | (green << 8) | (blue << 0);
+					filterImage.setRGB(x, y, pixelNuevo);
 				}
 			}
 
-			ImageIO.write(buffer2, "png", file2);
-			System.out.println("✅ Desvanecimiento circular aplicado exitosamente.");
+			File outputFile = new File("src/main/resources/image/Filtros por Colores/DesvanecimientoCircular.png");
+            ImageIO.write(filterImage, "png", outputFile);
+            System.out.println("Imagen con filtro Desvanecimiento Circular generada exitosamente. ✅");
 
 		} catch (Exception e) {
 			System.out.println("❌ Error al aplicar filtro: " + e.getMessage());
