@@ -56,7 +56,7 @@ public class EfectoRetro1 {
 				N = 2;
 			}
 
-			paso = 255f / (N - 1);
+			paso = 255f / (N - 1); // Cálculo del paso entre colores
 
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {

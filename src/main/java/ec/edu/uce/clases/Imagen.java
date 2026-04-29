@@ -1,4 +1,4 @@
-package ec.edu.uce.efectos;
+package ec.edu.uce.clases;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

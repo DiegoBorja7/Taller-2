@@ -14,8 +14,8 @@ public class Filtros {
             System.out.println("\nElige un filtro para aplicar:\n");
             System.out.println("  1. Vidrio Esmerilado");
             System.out.println("  2. Desvanecimiento Circular");
-            System.out.println("  3. Efecto Retro 1 (Reducción de colores)");
-            System.out.println("  4. Efecto Retro 2 (Posterización)");
+            System.out.println("  3. Efecto Retro 1 (RGB)");
+            System.out.println("  4. Efecto Retro 2 (2 Canales)");
             System.out.println("  5. Blanco y Negro");
             System.out.println("  6. Escala de Grises");
             System.out.println("  0. Salir\n");
