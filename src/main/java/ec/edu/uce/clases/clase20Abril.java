@@ -216,7 +216,7 @@ public class clase20Abril {
             float factorSaturacion = 1.5f, factorBrillo = 1.5f, factorTransparencia = 0.8f; // Factor para reducir la
                                                                                             // saturación (ajústalo
                                                                                             // según tus
-            // preferencias)
+                                                                                            // preferencias)
 
             BufferedImage image = ImageIO.read(file);
             width = image.getWidth();

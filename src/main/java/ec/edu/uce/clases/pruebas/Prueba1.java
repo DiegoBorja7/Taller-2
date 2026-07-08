@@ -1,10 +1,10 @@
-package ec.edu.uce.clases;
+package ec.edu.uce.clases.pruebas;
 
 import java.io.File;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-public class prueba1 {
+public class Prueba1 {
     public static void main(String[] args) {
         // A traves de una matriz de convolucion aplicar un efecto de oscurecimiento a
         // una imagen y generar 10 imagenes mas
