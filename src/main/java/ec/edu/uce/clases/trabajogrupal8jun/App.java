@@ -10,11 +10,11 @@ public class App {
 
     public static void main(String[] args) {
         // Rutas de las imagenes de entrada y salida
-        String inputPath = "src/main/resources/image/mundial.jpg"; 
+        String inputPath = "src/main/resources/image/mundial.jpg";
         String outDir = "src/main/resources/image/Trabajo Grupal_Operacion_Puntos/";
-        
-        System.out.println("=== Iniciando ejercicios - Operación Puntos  ===");
-        
+
+        System.out.println("=== Ejercicios operación puntos - Grupo 2  ===");
+
         // 1. Aumentar canal rojo
         aumentarRojo(inputPath, outDir + "1_rojo_aumentado.jpg", 40);
 
@@ -53,8 +53,6 @@ public class App {
 
         // 10. Convertir a CMYK
         convertirCMYK(inputPath);
-
-        System.out.println("=== Procesamiento terminado ===");
     }
 
     public static int clamp(int valor) {
@@ -120,7 +118,7 @@ public class App {
                     g = (pixel >> 8) & mascara;
                     b = (pixel) & mascara;
 
-                    int yLuminancia = (int)(0.299 * r + 0.587 * g + 0.114 * b);
+                    int yLuminancia = (int) (0.299 * r + 0.587 * g + 0.114 * b);
                     r = g = b = yLuminancia;
 
                     pixelNuevo = (a << 24) | (r << 16) | (g << 8) | b;
@@ -157,7 +155,7 @@ public class App {
                     g = (pixel >> 8) & mascara;
                     b = (pixel) & mascara;
 
-                    int yLuminancia = (int)(0.299 * r + 0.587 * g + 0.114 * b);
+                    int yLuminancia = (int) (0.299 * r + 0.587 * g + 0.114 * b);
                     int color = yLuminancia >= umbral ? 255 : 0;
                     r = g = b = color;
 
@@ -195,11 +193,11 @@ public class App {
                     g = (pixel >> 8) & mascara;
                     b = (pixel) & mascara;
 
-                    int gris = (int)(0.299 * r + 0.587 * g + 0.114 * b);
-                    
-                    r = clamp((int)(gris + saturacion * (r - gris)));
-                    g = clamp((int)(gris + saturacion * (g - gris)));
-                    b = clamp((int)(gris + saturacion * (b - gris)));
+                    int gris = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+
+                    r = clamp((int) (gris + saturacion * (r - gris)));
+                    g = clamp((int) (gris + saturacion * (g - gris)));
+                    b = clamp((int) (gris + saturacion * (b - gris)));
 
                     pixelNuevo = (a << 24) | (r << 16) | (g << 8) | b;
                     bufferSalida.setRGB(x, y, pixelNuevo);
@@ -237,7 +235,7 @@ public class App {
 
                     float[] hsb = Color.RGBtoHSB(r, g, b, null);
                     hsb[0] = (hsb[0] + grados / 360f) % 1.0f;
-                    
+
                     int nuevoRGB = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
                     r = (nuevoRGB >> 16) & mascara;
                     g = (nuevoRGB >> 8) & mascara;
@@ -317,9 +315,9 @@ public class App {
                     b = (pixel) & mascara;
 
                     // A = original, B = blanco (255)
-                    r = clamp((int)((1 - t) * r + t * 255));
-                    g = clamp((int)((1 - t) * g + t * 255));
-                    b = clamp((int)((1 - t) * b + t * 255));
+                    r = clamp((int) ((1 - t) * r + t * 255));
+                    g = clamp((int) ((1 - t) * g + t * 255));
+                    b = clamp((int) ((1 - t) * b + t * 255));
 
                     pixelNuevo = (a << 24) | (r << 16) | (g << 8) | b;
                     bufferSalida.setRGB(x, y, pixelNuevo);
@@ -356,9 +354,9 @@ public class App {
                     b = (pixel) & mascara;
 
                     // A = original, B = negro (0)
-                    r = clamp((int)((1 - t) * r + t * 0));
-                    g = clamp((int)((1 - t) * g + t * 0));
-                    b = clamp((int)((1 - t) * b + t * 0));
+                    r = clamp((int) ((1 - t) * r + t * 0));
+                    g = clamp((int) ((1 - t) * g + t * 0));
+                    b = clamp((int) ((1 - t) * b + t * 0));
 
                     pixelNuevo = (a << 24) | (r << 16) | (g << 8) | b;
                     bufferSalida.setRGB(x, y, pixelNuevo);
@@ -394,9 +392,9 @@ public class App {
                     g = (pixel >> 8) & mascara;
                     b = (pixel) & mascara;
 
-                    r = clamp((int)(r * escala));
-                    g = clamp((int)(g * escala));
-                    b = clamp((int)(b * escala));
+                    r = clamp((int) (r * escala));
+                    g = clamp((int) (g * escala));
+                    b = clamp((int) (b * escala));
 
                     pixelNuevo = (a << 24) | (r << 16) | (g << 8) | b;
                     bufferSalida.setRGB(x, y, pixelNuevo);
@@ -420,7 +418,7 @@ public class App {
             BufferedImage buffer = ImageIO.read(file);
             ancho = buffer.getWidth();
             alto = buffer.getHeight();
-            
+
             int totalPixeles = ancho * alto;
             int step = Math.max(1, totalPixeles / 25);
             int pixelesImpresos = 0;
@@ -453,14 +451,14 @@ public class App {
 
                     // Imprimimos distribuidamente hasta 25 pixeles
                     if (contadorPixel % step == 0 && pixelesImpresos < 25) {
-                        System.out.printf("Pixel [%4d, %4d] - RGB: (%3d, %3d, %3d) -> CMYK: (%.2f, %.2f, %.2f, %.2f)%n", 
-                                          x, y, r, g, b, c, m, yellow, k);
+                        System.out.printf("Pixel [%4d, %4d] - RGB: (%3d, %3d, %3d) -> CMYK: (%.2f, %.2f, %.2f, %.2f)%n",
+                                x, y, r, g, b, c, m, yellow, k);
                         pixelesImpresos++;
                     }
                     contadorPixel++;
                 }
             }
-            System.out.println("========================================\n");
+            System.out.println("========================================");
         } catch (Exception e) {
             System.out.println("Error al procesar CMYK: " + e.getMessage());
         }

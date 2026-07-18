@@ -52,6 +52,13 @@
             <classifier>natives-windows</classifier>
             <scope>runtime</scope>
         </dependency>
+        
+        <!-- FlatLaf para UI Moderna -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.4</version>
+        </dependency>
     </dependencies>
 
 </project>
