@@ -4,7 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class CorreccionPrueba2 {
+public class CorreccionEvaluacionSumativa1 {
     private static final float[] KERNEL_SHARPEN_5X5 = {
             0f, 0f, -1f, 0f, 0f,
             0f, -1f, -2f, -1f, 0f,

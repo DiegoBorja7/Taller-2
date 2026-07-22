@@ -23,10 +23,12 @@ public class clase13julio {
         };
 
         try {
+            int iteraciones = 5; // Puedes cambiar esto (10, 20) para hacerlo más borroso
             BufferedImage image = ImageIO.read(file);
-
-            BufferedImage filtro = AplicarFiltroSeparable(image, kernelGaussiano);
-
+            BufferedImage filtro = image;
+            for (int i = 0; i < iteraciones; i++) {
+                filtro = AplicarFiltroSeparable(filtro, kernelGaussiano);
+            }
             File outputFile = new File("src/main/resources/image/FiltroSeparable.png");
             ImageIO.write(filtro, "png", outputFile);
             System.out.println("Imagen generada con filtro separable.");
@@ -46,24 +48,31 @@ public class clase13julio {
     public static BufferedImage convolucionHorizontal(BufferedImage image, double[] kernel) {
         int width = image.getWidth();
         int height = image.getHeight();
-        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         int kernelRadius = kernel.length / 2;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double r = 0, g = 0, b = 0;
+                double r = 0, g = 0, b = 0, a = 0;
 
                 for (int k = -kernelRadius; k <= kernelRadius; k++) {
                     int pixelX = Math.min(Math.max(x + k, 0), width - 1);
                     int pixelColor = image.getRGB(pixelX, y);
 
+                    a += ((pixelColor >> 24) & 0xFF) * kernel[k + kernelRadius];
                     r += ((pixelColor >> 16) & 0xFF) * kernel[k + kernelRadius];
                     g += ((pixelColor >> 8) & 0xFF) * kernel[k + kernelRadius];
                     b += (pixelColor & 0xFF) * kernel[k + kernelRadius];
                 }
 
-                int newPixelColor = ((int) r << 16) | ((int) g << 8) | (int) b;
+                // Clamping
+                int finalA = Math.max(0, Math.min(255, (int) a));
+                int finalR = Math.max(0, Math.min(255, (int) r));
+                int finalG = Math.max(0, Math.min(255, (int) g));
+                int finalB = Math.max(0, Math.min(255, (int) b));
+
+                int newPixelColor = (finalA << 24) | (finalR << 16) | (finalG << 8) | finalB;
                 result.setRGB(x, y, newPixelColor);
             }
         }
@@ -74,24 +83,30 @@ public class clase13julio {
     public static BufferedImage convolucionVertical(BufferedImage image, double[] kernel) {
         int width = image.getWidth();
         int height = image.getHeight();
-        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         int kernelRadius = kernel.length / 2;
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double r = 0, g = 0, b = 0;
+                double a = 0, r = 0, g = 0, b = 0;
 
                 for (int k = -kernelRadius; k <= kernelRadius; k++) {
                     int pixelY = Math.min(Math.max(y + k, 0), height - 1);
                     int pixelColor = image.getRGB(x, pixelY);
 
+                    a += ((pixelColor >> 24) & 0xFF) * kernel[k + kernelRadius];
                     r += ((pixelColor >> 16) & 0xFF) * kernel[k + kernelRadius];
                     g += ((pixelColor >> 8) & 0xFF) * kernel[k + kernelRadius];
                     b += (pixelColor & 0xFF) * kernel[k + kernelRadius];
                 }
 
-                int newPixelColor = ((int) r << 16) | ((int) g << 8) | (int) b;
+                int finalA = Math.max(0, Math.min(255, (int) a));
+                int finalR = Math.max(0, Math.min(255, (int) r));
+                int finalG = Math.max(0, Math.min(255, (int) g));
+                int finalB = Math.max(0, Math.min(255, (int) b));
+
+                int newPixelColor = (finalA << 24) | (finalR << 16) | (finalG << 8) | finalB;
                 result.setRGB(x, y, newPixelColor);
             }
         }
