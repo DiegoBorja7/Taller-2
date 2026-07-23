@@ -17,7 +17,6 @@ public class clase13may_profesor {
         int ancho, alto, pixel1, pixel2, pixelBlend;
         int r1, g1, b1, r2, g2, b2, r, g, b;
         int mascara = 0xFF;
-        float alpha = 0.5f;
 
         try {
 

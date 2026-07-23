@@ -1,4 +1,4 @@
-package ec.edu.uce.clases.trabajogrupal8jun;
+package ec.edu.uce.clases.trabajogrupal8jul;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
